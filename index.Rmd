@@ -9,7 +9,7 @@ output:
 
 
 
-## Project thoughts
+## Milsetone 1: Project thoughts
 
 I am interested in exploring data related to a variety of topics, I've listed some potential ideas below:
 - in general home pricing / values in connection to another research factor - I list some ideas below: 
@@ -17,3 +17,12 @@ I am interested in exploring data related to a variety of topics, I've listed so
     -housing prices closer to water source (river, ocean, lake, etc.)
     -housing prices closer to places of higher education 
     -housing prices closer to historical/protected areas 
+    
+
+## Milestone 2: Proposal Paragraph
+
+Does a state with a higher percentage of the population having a bachelor’s degree or greater produce a higher average statewide SAT score? In this study I plan to investigate if a state with a greater percentage of the population having a bachelor's degree or greater, thus corresponding to the percentage of 4-year college graduates, in turn causes the average SAT scores of the state to be higher in comparison to other states with lower percentages. The idea is to investigate that if more adults and parents are college graduates then the SAT-aged students in the state, potentially their children, have higher scores. This relates to the manner in which the education system is structured and also generational education trends persisting from parents to children. I hypothesize that the greater percentage of a state population that has a bachelor's degree or higher will produce a higher state SAT scoring average. The reasoning behind such a hypothesis is grounded in the generational education idea that if a parent graduated university then their child is more likely to follow those actionable steps as well, causing more emphasis to be placed on higher SAT scores. Additionally, the idea of societal norms is factorable as well since if more adults in a state are college graduates then there is potentially a greater foundation in place for college preparatory services, like SAT tutoring and practice, which can improve individual scores. Also, the wealth and education connection is another measurable factor to note as there is a notion between college graduates and higher salary jobs, which would allow them to pay for SAT preparatory practice for their children. My sample is composed of the educational population information and SAT scores of each state from the year 2022. My unit of analysis is a state (e.g., Pennsylvania). My explanatory variable of interest is the percentage of a state population with a bachelor's degree or higher. This variable will be coded in the order of least to greatest percentage of the population, a ranking. This variable will use the data from the United States Census Bureau data sets. My outcome variable is the average SAT score of each state. This will just be coded as the average SAT score, and possibly another column designated as =1 if above the average national SAT score and =0 if below the national average. This variable will be evaluated using the SAT data set of the World Population Review. If I observe trends in higher bachelor degree percentages in a state population and higher SAT scores, then my hypothesis would be supported by my review. Also, if a trend existed with states with higher bachelor degree percentages of the population and an average SAT score above the national average than that would also support my hypothesis. However, if I observe that a higher bachelor degree percentage in a state does not have a trend of higher SAT scores or SAT scores above the national average, this would provide evidence against my hypothesis. When graphing the data, if a positive trend line, or more comprehensive positive regression, is associated with the average state SAT score as the bachelor degree percentage of the population increases, that would support my hypothesis.
+
+
+
+
