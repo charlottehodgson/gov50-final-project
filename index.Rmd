@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
 author: "Charlotte Hodgson"
-description: "My final project and mileston 1 (ideas for the final project)"
+description: "My final project and milestone 1 (ideas for the final project)"
 output:
   distill::distill_article:
     self_contained: false
