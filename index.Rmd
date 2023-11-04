@@ -28,20 +28,35 @@ Does a state with a higher percentage of the population having a bachelor’s de
 Two scatter plots are shown below showing the distribution of one variable. The first scatter plot is of the Average SAT Scores by State, using data updated May 2023. The Scatter Plot ranks the states in the order of the lowest SAT Score to the highest SAT Score by State. The second scatter plot shows the percentage of the population that is 25 and over in each state that holds a Bachelor's Degree. The states are also ranked in order from lowest percentage to greatest percentage of bachelor's degree holders of the population 25 and over. The first plot uses data from the "World Population Review" and the second plot uses data from the "United States Census Bureau". 
 
 ```{r}
+setwd("/Users/charlottehodgson/Gov 50/gov50-final-project-Hodgson")
+library(readr)
+library(tidyverse)
+
+sat_data <- read_csv("SAT_SCORES.csv")
+degree_percent <- read_csv("DEGREE_PERCENTAGE.csv")
+drop_na(degree_percent)
+```
+
+
+```{r}
 library(ggplot2)
 
-ggplot(`sat.scores.by.state.[updated.may.2023]`, aes(x = reorder(state, satScoresAvgTotal), y = satScoresAvgTotal)) +
+ggplot(sat_data, aes(x = reorder(state, satScoresAvgTotal), y = satScoresAvgTotal)) +
   geom_point(shape = 19, size = 2) + 
   labs(title = "Average SAT Scores by State", x = "State", y = "Average SAT Scores") + 
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(plot.margin = margin(3, 3, 3, 1))
 ```
+```{r}
+load
+```
+
 
 ```{r}
 library(ggplot2)
 
-ggplot(`degree_percentage`, aes(x = reorder(State, DegreePercent), y = DegreePercent)) +
+ggplot(degree_percent, aes(x = reorder(State, DegreePercent), y = DegreePercent)) +
   geom_point(shape = 19, size = 2) + 
   labs(title = "Population 25 and Over with a Bachelor's Degree Percentage by State", x = "State", y = "Bachelor's Degree Percentage") + 
   theme_minimal() +
