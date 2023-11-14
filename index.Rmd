@@ -64,4 +64,27 @@ ggplot(degree_percent, aes(x = reorder(State, DegreePercent), y = DegreePercent)
   theme(plot.margin = margin(1, 1, 1, 1))
 ```
 
+## Milestone 4
 
+The bar plot created ("Population 25 and Over with a Bachelor's Degree Percentage by State (Ordered by SAT Score)") merges the data sets used in the previous milestones (sat_data and degree_percent) to show the population 25 and over in each state with a bachelor's degree by percentage, but the states are ordered in lowest to highest average SAT score. This is attempting to answer my question of if a state with a higher percentage of the population having a bachelor’s degree or greater produces a higher average statewide SAT score? The bachelor's degree percentage is shown along the y-axis and not the SAT scores, since this presented a clearer plot representation of how the SAT scores and degree percentages interact. From my hypothesis, my results would have expected to show an increase in the degree percentages as the SAT scores increase by state, however, this is not what my results show. The bar plot shows that there is not a mutual steady increase, but rather the individual categories for each state appear to have no correlation or steady increase or decline, but rather suggest no correlation between the degree percentages and SAT scores directly. However, I added a line of regression to estimate the line of best fit and see if a slope was visible. The line actually shows a slight decrease of the degree percentage as the average SAT score increases, refutung my hypothesis. 
+
+```{r}
+merged_data <- merge(sat_data, degree_percent, by.x = "state", by.y = "State", all = TRUE)
+
+merged_data <- merged_data[order(merged_data$satScoresAvgTotal), ]
+
+merged_data$state <- factor(merged_data$state, levels = merged_data$state)
+
+par(mar = c(10, 5, 4, 2) + 0.1)
+
+barplot(merged_data$DegreePercent, names.arg = merged_data$state,
+        col = "hotpink", main = "Population 25 and Over with a Bachelor's Degree Percentage by State\n(Ordered by SAT Score)",
+        xlab = "", ylab = "Bachelor's Degree Percent", las = 2, cex.names = 0.7) 
+
+mtext("State (Ranked Lowest to Highest Avergae SAT Scores)", side = 1, line = 6)
+
+fit <- lm(DegreePercent ~ as.numeric(state), data = merged_data)
+
+abline(fit, col = "blue", lwd = 2)
+
+```

@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["degree percentage.xlsx","DEGREE_PERCENTAGE.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","SAT Scores.xlsx","SAT_SCORES.csv"]}
+  {"type":"character","attributes":{},"value":["degree percentage.xlsx","DEGREE_PERCENTAGE.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","SAT Scores.xlsx","SAT_SCORES.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1599,7 +1599,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
         cat(&quot;Loading objects:\n&quot;)
     .Internal(loadFromConn2(con, envir, verbose))
 }
-&lt;bytecode: 0x7f834512f508&gt;
+&lt;bytecode: 0x7faa5fda4ae8&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
@@ -1614,6 +1614,30 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.margin <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>margin</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<h2 id="milestone-4">Milestone 4</h2>
+<p>The bar plot created (“Population 25 and Over with a Bachelor’s Degree Percentage by State (Ordered by SAT Score)”) merges the data sets used in the previous milestones (sat_data and degree_percent) to show the population 25 and over in each state with a bachelor’s degree by percentage, but the states are ordered in lowest to highest average SAT score. This is attempting to answer my question of if a state with a higher percentage of the population having a bachelor’s degree or greater produces a higher average statewide SAT score? The bachelor’s degree percentage is shown along the y-axis and not the SAT scores, since this presented a clearer plot representation of how the SAT scores and degree percentages interact. From my hypothesis, my results would have expected to show an increase in the degree percentages as the SAT scores increase by state, however, this is not what my results show. The bar plot shows that there is not a mutual steady increase, but rather the individual categories for each state appear to have no correlation or steady increase or decline, but rather suggest no correlation between the degree percentages and SAT scores directly. However, I added a line of regression to estimate the line of best fit and see if a slope was visible. The line actually shows a slight decrease of the degree percentage as the average SAT score increases, refutung my hypothesis.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>merged_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>sat_data</span>, <span class='va'>degree_percent</span>, by.x <span class='op'>=</span> <span class='st'>"state"</span>, by.y <span class='op'>=</span> <span class='st'>"State"</span>, all <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>merged_data</span> <span class='op'>&lt;-</span> <span class='va'>merged_data</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>merged_data</span><span class='op'>$</span><span class='va'>satScoresAvgTotal</span><span class='op'>)</span>, <span class='op'>]</span></span>
+<span></span>
+<span><span class='va'>merged_data</span><span class='op'>$</span><span class='va'>state</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>merged_data</span><span class='op'>$</span><span class='va'>state</span>, levels <span class='op'>=</span> <span class='va'>merged_data</span><span class='op'>$</span><span class='va'>state</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span>, <span class='fl'>4</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>0.1</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span><span class='op'>(</span><span class='va'>merged_data</span><span class='op'>$</span><span class='va'>DegreePercent</span>, names.arg <span class='op'>=</span> <span class='va'>merged_data</span><span class='op'>$</span><span class='va'>state</span>,</span>
+<span>        col <span class='op'>=</span> <span class='st'>"hotpink"</span>, main <span class='op'>=</span> <span class='st'>"Population 25 and Over with a Bachelor's Degree Percentage by State\n(Ordered by SAT Score)"</span>,</span>
+<span>        xlab <span class='op'>=</span> <span class='st'>""</span>, ylab <span class='op'>=</span> <span class='st'>"Bachelor's Degree Percent"</span>, las <span class='op'>=</span> <span class='fl'>2</span>, cex.names <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span> </span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/graphics/mtext.html'>mtext</a></span><span class='op'>(</span><span class='st'>"State (Ranked Lowest to Highest Avergae SAT Scores)"</span>, side <span class='op'>=</span> <span class='fl'>1</span>, line <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>DegreePercent</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>state</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>merged_data</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span><span class='va'>fit</span>, col <span class='op'>=</span> <span class='st'>"blue"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
 </div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
