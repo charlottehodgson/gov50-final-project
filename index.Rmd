@@ -84,6 +84,97 @@ barplot(merged_data$DegreePercent, names.arg = merged_data$state,
 mtext("State (Ranked Lowest to Highest Avergae SAT Scores)", side = 1, line = 6)
 
 fit <- lm(DegreePercent ~ as.numeric(state), data = merged_data)
+
 abline(fit, col = "blue", lwd = 2)
 
 ```
+
+##Final Project
+
+Introduction: 
+
+  Does a state with a higher percentage of the population having a bachelor’s degree or greater produce a higher average statewide SAT score and vice versa? In this study, I plan to investigate if a state with a greater percentage of the population having a bachelor’s degree or greater, thus corresponding to the percentage of 4-year college graduates, in turn, causes the average SAT scores of the state to be higher in comparison to other states with lower percentages. Also, corresponding, the higher the SAT scores the greater bachelor's degree percentage. The idea is to investigate that if more adults and parents are college graduates then the SAT-aged students in the state, potentially their children, have higher scores. This relates to how the education system is structured and also generational education trends persisting from parents to children. I hypothesize that the greater percentage of a state population that has a bachelor’s degree or higher will produce a higher state SAT scoring average. Further, in turn, if the SAT scores are higher this will produce a greater percentage of the population with a bachelor’s degree. The reasoning behind such a hypothesis is grounded in the generational trend that if a parent graduated from university then their child is more likely to follow that, causing more emphasis to be placed on higher SAT scores. Additionally, the idea of societal norms is factorable as well since if more adults in a state are college graduates then there is potentially a greater foundation in place for college preparatory services, like SAT tutoring and practice, which can improve individual scores.
+
+
+Data section:
+
+  There are two data sources for this project. One is the “Education Attainment” data set from the United States Census Bureau, the variable of population per state over the age of 25 with a bachelor's degree, and the “SAT Scores by State” data set from the World Population Review, the variable of SAT scores by state from 2023. The online United States Census Bureau data set uses information directly from the United Census Bureau in a single-platform setting. The data is found through direct response measures through survey and census models, as well as from data already collected by federal, state, or local governments. The World Population Review uses data directly shared by the College Board, which owns, develops, and publishes the SAT. 
+  The independent variable, or explanatory variable, is the percentage of a state population with a bachelor’s degree or higher. This variable will be coded in the order of least to greatest percentage of the population, a ranking, measured from the surveys of statistical methodology by the United States Census Bureau. My dependent variable, or outcome variable, is the average SAT score of each state. This is measured from the data collection of test-takers and statistical modeling is used to compile the average SAT score per state from the data. Overall, statistical analysis is then used in my coding to model the comparison between these two variables. The research design is cross-sectional as the collected data is from one time versus observations over a studied period with treatments. The plot that summarizes the dependent variable, SAT scores ranked lowest to highest by state (2023), is shown below, also followed by the plot that shows the independent variable, lowest to highest ranked states by bachelor’s degree percentages (25 and up).
+  
+```{r}
+library(ggplot2)
+##create the scatter plot of the "Average SAT Scores by State"
+ggplot(sat_data, aes(x = reorder(state, satScoresAvgTotal), y = satScoresAvgTotal)) +
+##add the points 
+  geom_point(shape = 19, size = 2) + 
+#set the labels and titles 
+  labs(title = "Average SAT Scores by State", x = "State", y = "Average SAT Scores") + 
+##set the theme 
+  theme_minimal() +
+##set the angle of the text on the x-axis
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+##set the margins of the scatter plot
+  theme(plot.margin = margin(3, 3, 3, 1))
+```
+
+```{r}
+library(ggplot2)
+##create the scatter plot of the "Population 25 and Over with a Bachelor's Degree Percentage by State"
+ggplot(degree_percent, aes(x = reorder(State, DegreePercent), y = DegreePercent)) +
+##add the points
+  geom_point(shape = 19, size = 2) + 
+#set the labels and titles
+  labs(title = "Population 25 and Over with a Bachelor's Degree Percentage by State", x = "State", y = "Bachelor's Degree Percentage") + 
+##set the theme
+  theme_minimal() +
+##set the angle of the text on the x-axis
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+##set the margins of the scatter plot
+  theme(plot.margin = margin(1, 1, 1, 1))
+```
+
+Results section: 
+  
+Plot of main analysis
+```{r}
+##first merging the data sets
+merged_data <- merge(sat_data, degree_percent, by.x = "state", by.y = "State", all = TRUE)
+
+merged_data <- merged_data[order(merged_data$satScoresAvgTotal), ]
+
+merged_data$state <- factor(merged_data$state, levels = merged_data$state)
+
+##setting the parameters of the plot through outlining the margins to help with the spacing 
+par(mar = c(10, 5, 4, 2) + 0.1)
+
+##now creating the bar plot, with the values, color, labels, title, and the style and size of the labels 
+barplot(merged_data$DegreePercent, names.arg = merged_data$state,
+        col = "hotpink", main = "Population 25 and Over with a Bachelor's Degree Percentage by State\n(Ordered by SAT Score)",
+        xlab = "", ylab = "Bachelor's Degree Percent", las = 2, cex.names = 0.7) 
+
+##adding text to the bottom plot margins to reflect the title for the x-axis
+mtext("State (Ranked Lowest to Highest Avergae SAT Scores)", side = 1, line = 6) 
+
+##lastly, fitting a linear regression model to the plot and adding the regression line
+fit <- lm(DegreePercent ~ as.numeric(state), data = merged_data)
+abline(fit, col = "blue", lwd = 2)
+
+```
+
+Regression output
+```{r}
+
+##The following code presents a nicely formatted table for the regression ("fit"):
+
+modelsummary::modelsummary(fit,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+  The bar plot created (“Population 25 and Over with a Bachelor’s Degree Percentage by State (Ordered by SAT Score)”) merges the data sets “sat_data” and “degree_percent” to show the population 25 and over in each state with a bachelor’s degree by percentage, but the states are ordered in lowest to highest average SAT score. This is attempting to answer my question surrounding the relationship and causality between the percentage of the population with a bachelor’s degree and the average SAT score statewide. The relationship of whether a state with a higher percentage of the population having a bachelor’s degree or greater produces a higher average statewide SAT score and vice versa? The bachelor’s degree percentage is shown along the y-axis, not the SAT scores. The SAT scores are ranked from lowest to highest (left to right) along the x-axis, with the corresponding degree percentage for the state on the y-axis of the bar plot. This presents a clearer plot representation of how the SAT scores and degree percentages relate. Second, the regression outputs is shown, with the intercept value, the main coefficient of interest value, p-value, standard error, and more using the “model summary” code to neatly format a table for the regression (“fit”).
+  The bar plot shows that there is not a mutual steady increase. A line of regression was added to estimate the line of best fit and see if a slope was visible. The line shows a slight decrease in the degree percentage as the average SAT score increases, refuting my hypothesis. The main coefficient of interest is shown numerically by my regression table, which shares a -0.022. This means as the State SAT score increases, the percentage of the population with a bachelor’s degree actually lowers, and vice versa, which is the opposite of what I expected. There is statistical significance for the intercept but not for the estimated coefficient in question. This is because the associated p-value is 0.435, a greater value than 0.05, which is a common significance level, meaning it is not statistically significant at that level. Thus, there is less support to be able to reject the null hypothesis with the coefficient equal to zero. Further, from this, I do not believe the coefficient to represent a causal effect. Although the standard error (0.028) is on the smaller side, meaning more precision, the issue of statistical significance from the higher p-value makes a causal effect difficult to support. There are also concerns for bias, confounding or omitted variables, that make basing causality on regression alone a challenge.  
+  
+
+Conclusion section:
+
+  As stated above, bar plot created (“Population 25 and Over with a Bachelor’s Degree Percentage by State (Ordered by SAT Score)”) shows the population 25 and over in each state with a bachelor’s degree by percentage, but the states are ordered by lowest to highest average SAT score. The results show a slight decrease of 0.022 in the degree percentage as the average SAT score increases, refuting my hypothesis. From my hypothesis, my results would have expected to show an increase in the degree percentages as the SAT scores increase by state, however, this is not what the results have shown. Some limitations that may have affected my results are that SAT scores from 2023 may not be a reflection of the direction the state is heading in, as the states with lower SAT scores from 2023 may, in the future, have higher degree percentages that could relate to higher SAT scores but that is not discernible yet. Thus, a long-term observational study could be helpful if the time and resources were available. Generalization could also be a specific limitation and threat from not acknowledging the difference in educational systems within states which may lead to higher scores as a result. Thus, the analysis could be improved by looking into state public school educational rankings and the institutions in place that can be a factor in the score an individual might receive. Further, sampling bias could be a threat. This is because the argument that parents with bachelor’s degrees are more expected to have children that have higher SAT scores from them potentially spending more money towards SAT programs or simply having their children take the exam depends on narrowing the sample selection to individuals over 25 with a bachelor’s degree and at least one child, but this study did not exclusively investigate parents. Also, the SAT is mandatory in some states to graduate from high school, but not all. This means that certain states may have more positively skewed scores simply because more individuals took the SAT. Thus, if more data and time was readily available, these potential sampling biases could be accounted for in an easier manner. 
