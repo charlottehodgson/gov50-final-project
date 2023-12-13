@@ -89,7 +89,7 @@ abline(fit, col = "blue", lwd = 2)
 
 ```
 
-##Final Project
+## Final Project
 
 Introduction: 
 
@@ -99,6 +99,7 @@ Introduction:
 Data section:
 
   There are two data sources for this project. One is the “Education Attainment” data set from the United States Census Bureau, the variable of population per state over the age of 25 with a bachelor's degree, and the “SAT Scores by State” data set from the World Population Review, the variable of SAT scores by state from 2023. The online United States Census Bureau data set uses information directly from the United Census Bureau in a single-platform setting. The data is found through direct response measures through survey and census models, as well as from data already collected by federal, state, or local governments. The World Population Review uses data directly shared by the College Board, which owns, develops, and publishes the SAT. 
+  
   The independent variable, or explanatory variable, is the percentage of a state population with a bachelor’s degree or higher. This variable will be coded in the order of least to greatest percentage of the population, a ranking, measured from the surveys of statistical methodology by the United States Census Bureau. My dependent variable, or outcome variable, is the average SAT score of each state. This is measured from the data collection of test-takers and statistical modeling is used to compile the average SAT score per state from the data. Overall, statistical analysis is then used in my coding to model the comparison between these two variables. The research design is cross-sectional as the collected data is from one time versus observations over a studied period with treatments. The plot that summarizes the dependent variable, SAT scores ranked lowest to highest by state (2023), is shown below, also followed by the plot that shows the independent variable, lowest to highest ranked states by bachelor’s degree percentages (25 and up).
   
 ```{r}
@@ -136,7 +137,9 @@ ggplot(degree_percent, aes(x = reorder(State, DegreePercent), y = DegreePercent)
 Results section: 
   
 Plot of main analysis
-```{r}
+
+```{r, fig.width = 8}
+## ^ above setting the "fig.width" chunk option so that all the state names are shown on the site
 ##first merging the data sets
 merged_data <- merge(sat_data, degree_percent, by.x = "state", by.y = "State", all = TRUE)
 
@@ -172,6 +175,7 @@ modelsummary::modelsummary(fit,
                            gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
   The bar plot created (“Population 25 and Over with a Bachelor’s Degree Percentage by State (Ordered by SAT Score)”) merges the data sets “sat_data” and “degree_percent” to show the population 25 and over in each state with a bachelor’s degree by percentage, but the states are ordered in lowest to highest average SAT score. This is attempting to answer my question surrounding the relationship and causality between the percentage of the population with a bachelor’s degree and the average SAT score statewide. The relationship of whether a state with a higher percentage of the population having a bachelor’s degree or greater produces a higher average statewide SAT score and vice versa? The bachelor’s degree percentage is shown along the y-axis, not the SAT scores. The SAT scores are ranked from lowest to highest (left to right) along the x-axis, with the corresponding degree percentage for the state on the y-axis of the bar plot. This presents a clearer plot representation of how the SAT scores and degree percentages relate. Second, the regression outputs is shown, with the intercept value, the main coefficient of interest value, p-value, standard error, and more using the “model summary” code to neatly format a table for the regression (“fit”).
+  
   The bar plot shows that there is not a mutual steady increase. A line of regression was added to estimate the line of best fit and see if a slope was visible. The line shows a slight decrease in the degree percentage as the average SAT score increases, refuting my hypothesis. The main coefficient of interest is shown numerically by my regression table, which shares a -0.022. This means as the State SAT score increases, the percentage of the population with a bachelor’s degree actually lowers, and vice versa, which is the opposite of what I expected. There is statistical significance for the intercept but not for the estimated coefficient in question. This is because the associated p-value is 0.435, a greater value than 0.05, which is a common significance level, meaning it is not statistically significant at that level. Thus, there is less support to be able to reject the null hypothesis with the coefficient equal to zero. Further, from this, I do not believe the coefficient to represent a causal effect. Although the standard error (0.028) is on the smaller side, meaning more precision, the issue of statistical significance from the higher p-value makes a causal effect difficult to support. There are also concerns for bias, confounding or omitted variables, that make basing causality on regression alone a challenge.  
   
 
